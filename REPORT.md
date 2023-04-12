@@ -54,7 +54,7 @@ $ open https://cmake.org/
 `создание CMakeList.txt для библиотеки solver_lib`
 
 ![image](https://user-images.githubusercontent.com/77126126/225581794-91be9cbf-57e7-4f3e-912c-8f436d2cd53c.png)
-`CMakeList.txt для приложения solver_application`
+`CMakeList.txt для приложения solver_applicatio
 
 
 **Удачной стажировки!**
