@@ -23,10 +23,21 @@ $ open https://cmake.org/
 Создайте `CMakeList.txt` в директории [formatter_lib](formatter_lib),
 с помощью которого можно будет собирать статическую библиотеку *formatter*.
 
- ![image](https://user-images.githubusercontent.com/77126126/225571945-6a48ea5a-9f2f-475d-acd6-595d2bd19d92.png)
+ `git clone https://github.com/KseniaGavr/lab03-1 lab03_1`
+ `cd lab03_1`
+ `cat > CMakeLists.txt >> EOF`
+ `> cmake_minimum_required (VERSION 3.4)`
+ `>`
+ `> set(CMAKE_CXX_STANDART 11)`
+ `>`
+ `> add_library(formatter STATIC{CMAKE_CURRENT_SOURCE_DIR}/formatter_lib/formatter.cpp`
+ `>EOF`
+ `git add .`
+ `git commit -m "создание CMakeLists.cpp`
  `клонирование репозитория и создание CMakeList.txt для formatter_lib`
  
- ![image](https://user-images.githubusercontent.com/77126126/225573376-cfd145c2-9ab7-47fa-8d5c-41b5d10436d1.png)
+ `cmake .`
+ `make`
  `сборка formatter_lib`
 
 
@@ -37,7 +48,13 @@ $ open https://cmake.org/
 руководитель поручает заняться созданием `CMakeList.txt` для библиотеки 
 *formatter_ex*, которая в свою очередь использует библиотеку *formatter*.
 
-![image](https://user-images.githubusercontent.com/77126126/225576889-b2be4d04-7269-4f34-8659-2c5e80f8efef.png)
+`cmake_minimum_required(VERSION 3.4)`
+`set(CMake_CXX_STANDART 11)`
+`project(formatter_ex)`
+`add_library(formatter_ex ${CMAKE_CURRENT_SOURCE_DIR}/formatter.cpp_ex`
+`target_include_directories(formatter_ex PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/formatter_lib)`
+`add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/formatter_lib formatter)`
+`target_link_libraries(formatter_ex PUBLIC formatter)`
 `создание CMakeList.txt для formatter_ex_lib на основе созданного в formatter_lib`
 
 ### Задание 3
@@ -47,13 +64,30 @@ $ open https://cmake.org/
 * *hello_world*, которое использует библиотеку *formatter_ex*;
 * *solver*, приложение которое испольует статические библиотеки *formatter_ex* и *solver_lib*.
 
-![image](https://user-images.githubusercontent.com/77126126/225580259-e82627cf-2a27-43de-98a6-4bd08dfd5033.png)
+`cmake_minimum_required(VERSION 3.4)`
+`set(CMake_CXX_STANDART 11)`
+`project(hello_world)`
+`add_executable(hello ${CMAKE_CURRENT_SOURCE_DIR}/hello_world.cpp)`
+`include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../formatter_ex_lib)`
+`add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../formatter_ex_lib formatter_ex)`
+`target_link_libraries(hello formatter_ex)`
 `CMakeList.txt для приложения hello_world (подключение библиотеки formatter_ex_lib с указанием возможности ее линковки под именем hello; подключение исходного hello_world.cpp файла)`
 
-![image](https://user-images.githubusercontent.com/77126126/225579760-d0208cf5-b4e2-4cf0-9812-beb7d5b2215f.png)
+`cmake_minimum_required(VERSION 3.4)`
+`set(CMake_CXX_STANDART 11)`
+`project(solver_lib)`
+`add_library(solver_lib STATIC ${CMAKE_CURRENT_SOURCE_DIR}/solver.cpp})`
 `создание CMakeList.txt для библиотеки solver_lib`
 
-![image](https://user-images.githubusercontent.com/77126126/225581794-91be9cbf-57e7-4f3e-912c-8f436d2cd53c.png)
+`cmake_minimum_required(VERSION 3.4)`
+`set(CMake_CXX_STANDART 11)`
+`project(solver)`
+`add_executable(solver ${CMAKE_CURRENT_SOURCE_DIR}/equation.cpp})`
+`include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../formatter_ex_lib ${CMAKE_CURRENT_SOURCE_DIR}/../solver_lib)`
+`add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../formatter_ex_lib formatter_ex)`
+`add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../solver_lib solver_lib)`
+`target_link_libraries(solver formatter_ex solver_lib)`
+
 `CMakeList.txt для приложения solver_applicatio
 
 
